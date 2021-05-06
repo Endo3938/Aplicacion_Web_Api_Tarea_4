@@ -1,0 +1,56 @@
+<ion-content fullscreen>
+  <ion-toolbar>
+    <ion-title size="large" style="text-align: center;">¡Bienvenido a anime obrador!</ion-title>
+    <ion-item>
+      <ion-label>Busqueda: </ion-label>
+      <ion-input type="text" [(ngModel)]="nombre" minlength="3"></ion-input>
+      <ion-button (click)="buscar()" color="secondary">
+        <ion-icon name="search-sharp"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>Filtro: </ion-label>
+      <ion-select [(ngModel)]="filtro">
+        <ion-select-option value="">Ninguno</ion-select-option>
+        <ion-select-option value="g">Todas las edades (G)</ion-select-option>
+        <ion-select-option value="pg">Niños (PG)</ion-select-option>
+        <ion-select-option value="pg13">Adolescentes (PG-13)</ion-select-option>
+        <ion-select-option value="r17">Mayores de edad (R)</ion-select-option>
+        <ion-select-option value="r">Desnudez Leve (R+)</ion-select-option>
+        <ion-select-option value="rx">XXX (Rx)</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="!cargando">
+    <ion-item>
+      <ion-label>Pagina: {{page}} de {{maxPage}}</ion-label>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="danger" *ngIf="page<=maxPage && page>1" (click)="retroceder()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+
+        </ion-col>
+        <ion-button color="success" *ngIf="page>=1 && page<maxPage" (click)="avanzar()">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="success" *ngIf="page>=maxPage" disabled>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+
+  <div *ngIf="animes != undefined">
+    <div *ngIf="animes.results.length>0">
+      <app-animes-resultado *ngFor="let p of animes.results" [anime]="p"></app-animes-resultado>
+    </div>
+  </div>
+
+
+
+</ion-content>
